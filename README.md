@@ -1,4 +1,7 @@
-# hello-world
-This is the repository where ideas, project descriptions and other useful resources reside
+# Medium
 
-Author:bm37
+Medium is the next generation Multimedia player.
+
+Under development currently.
+
+Author:Bhavyansh Mishra

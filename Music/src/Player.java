@@ -31,6 +31,11 @@ public class Player {
 		
 	}
 	
+	public void addUser(User user){
+		this.currentUser = user;
+		this.allUsers.add(user);
+	}
+	
 	public User getCurrentUser() {
 		return currentUser;
 	}

@@ -14,7 +14,7 @@
             <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
          </children>
       </HBox>
-      <HBox layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0">
+      <HBox layoutX="10.0" layoutY="10.0" prefHeight="201.0" prefWidth="600.0">
          <children>
             <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
             <VBox prefHeight="167.0" prefWidth="200.0">
@@ -52,7 +52,7 @@
                         <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
                      </VBox.margin>
                   </HBox>
-                  <Label fx:id="errorMessage" prefHeight="20.0" prefWidth="188.0">
+                  <Label fx:id="errorMessage" prefHeight="157.0" prefWidth="188.0" wrapText="true" VBox.vgrow="ALWAYS">
                      <VBox.margin>
                         <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
                      </VBox.margin>

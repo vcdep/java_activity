@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.scene.media.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.geometry.*?>
@@ -98,7 +99,28 @@
    <bottom>
       <VBox BorderPane.alignment="CENTER">
          <children>
-            <HBox prefHeight="100.0" prefWidth="200.0" />
+            <HBox>
+               <children>
+                  <VBox alignment="CENTER" prefHeight="61.0" prefWidth="79.0">
+                     <children>
+                        <Label text="2:40">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <Slider prefHeight="59.0" prefWidth="670.0" value="30.0" HBox.hgrow="ALWAYS" />
+                  <VBox alignment="CENTER" prefHeight="60.0" prefWidth="78.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label text="4:07">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+               </children></HBox>
             <HBox>
                <children>
                   <Label text="Label" HBox.hgrow="ALWAYS">

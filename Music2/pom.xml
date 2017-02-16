@@ -3,8 +3,6 @@
   <groupId>Music2</groupId>
   <artifactId>Music2</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name>MusicApp</name>
-  <description>The next generation Music player</description>
   <build>
     <sourceDirectory>src</sourceDirectory>
     <resources>

@@ -53,17 +53,30 @@ public class LoginController implements Initializable{
 	}
 	@FXML
 	public void onSignupClicked(ActionEvent event) throws Exception{
-		loader = new FXMLLoader();
-		root = loader.load(getClass().getResource("/player.fxml").openStream());
-		window = (Stage) ((Control)event.getSource()).getScene().getWindow();
-		scene = new Scene(root, 800, 600);
-		controller = (Controller) loader.getController();
-		controller.setUserLabelText("Hi, " + this.userNameField.getText());
-		controller.setPlayer(this.player);
-		window.setScene(scene);
-		window.show();
+		String userName = this.userNameField.getText();
+		String passWord = this.passwordField.getText();
+		if(userName.length()<6 || passWord.length()<6){
+			this.errorMessage.setText("Username or Password needs to be 6 characters or longer.");
+		}else{
+			this.player.addUser(new User(userName, userName, passWord));
+			for(User user : this.player.getAllUsers())
+				System.out.println("User: " + user.getName());
+			loader = new FXMLLoader();
+			root = loader.load(getClass().getResource("/player.fxml").openStream());
+			window = (Stage) ((Control)event.getSource()).getScene().getWindow();
+			scene = new Scene(root, 800, 600);
+			controller = (Controller) loader.getController();
+			controller.setUserLabelText("Hi, " + this.userNameField.getText());
+			controller.setPlayer(this.player);
+			window.setScene(scene);
+			window.show();
+		}
 	}
 
+	public void setPlayer(Player player){
+		this.player = player;
+	}
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub

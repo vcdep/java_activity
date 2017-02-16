@@ -21,8 +21,10 @@ public class Controller implements Initializable{
 	private ListView<String> list;
 	@FXML
 	private Button searchButton;
+	
 	private ObservableList<String> items;
 	private Player player;
+	private FXMLLoader loader;
 
 	
 	public void setList(ArrayList<Song> songs){
@@ -34,7 +36,10 @@ public class Controller implements Initializable{
 	
 	@FXML
 	public void onSwitchUserClicked(ActionEvent event) throws Exception{
-		Pane root = FXMLLoader.load(getClass().getResource("/login.fxml"));
+		this.loader = new FXMLLoader();
+		Pane root = loader.load(getClass().getResource("/login.fxml").openStream());
+		LoginController loginCont = (LoginController) loader.getController();
+		loginCont.setPlayer(player);
 		Stage window = (Stage) ((Control)event.getSource()).getScene().getWindow();
 		Scene scene = new Scene(root, 800, 600);		
 		window.setScene(scene);

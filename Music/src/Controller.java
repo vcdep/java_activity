@@ -25,7 +25,6 @@ public class Controller implements Initializable{
 	private ObservableList<String> items;
 	private Player player;
 	private FXMLLoader loader;
-
 	
 	public void setList(ArrayList<Song> songs){
 		items = FXCollections.observableArrayList();

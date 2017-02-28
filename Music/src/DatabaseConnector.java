@@ -7,14 +7,20 @@ public class DatabaseConnector {
 	private String query;
 	
 	public DatabaseConnector(){
-		this.setQuery("select Name from gadget");
+		this.setQuery("select * from songs");
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			this.conn = DriverManager.getConnection("jdbc:mysql://54.172.187.147:3306/Tester", "naman", "chocolate");
 			this.statement = this.conn.createStatement();
 			this.rows = this.statement.executeQuery(this.query);
 			while(this.rows.next()){
-				System.out.println(this.rows.getString("Name"));
+				System.out.println(this.rows.getInt("Srno")+"\t"+
+									this.rows.getString("Name")+"\t"+
+									this.rows.getInt("Duration")+"\t"+
+									this.rows.getString("Singer")+"\t"+
+									this.rows.getDouble("Cost")+"\t"+
+									this.rows.getString("Location")+"\t"+
+									this.rows.getString("Icon")+"\t");
 			}
 		} catch (SQLException ex) {
 			System.out.println("SQLException: " + ex.getMessage());

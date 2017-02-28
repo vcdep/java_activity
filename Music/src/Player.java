@@ -7,6 +7,7 @@ public class Player {
 	private Boolean paused;
 	private Playlist currentPlaylist;
 	private ArrayList<User> allUsers;
+	private DatabaseConnector dbconn;
 	
 	public Player(){
 		this.currentUser = new User("Administrator", "root", "root");
@@ -29,6 +30,7 @@ public class Player {
 		this.currentUser.getAllSongs().add(new Song("Sugar"));
 		this.currentUser.getAllSongs().add(new Song("Radioactive"));
 		
+		this.dbconn = new DatabaseConnector();
 	}
 	
 	public void addUser(User user){

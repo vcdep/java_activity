@@ -20,7 +20,6 @@ public class View extends Application{
 	
 	public void start(Stage primaryStage) throws Exception{
 		player = new Player();
-		player.dbconnect();
 		window = primaryStage;
 		loader = new FXMLLoader();
 		root = loader.load(getClass().getResource("/resources/login.fxml").openStream());

@@ -7,6 +7,7 @@ public class Player {
 	private Boolean playing;
 	private Boolean paused;
 	private Playlist currentPlaylist;
+
 	private ArrayList<Song> allSongs;
 	private ArrayList<User> allUsers;
 	private DatabaseConnector dbconn;
@@ -32,16 +33,14 @@ public class Player {
 //		this.currentUser.getAllSongs().add(new Song("Sugar"));
 //		this.currentUser.getAllSongs().add(new Song("Radioactive"));
 		
-		
-	}
-	public void dbconnect(){
 		this.dbconn = new DatabaseConnector();
 		this.setAllSongs(this.dbconn.getDbSongs());
 		dbconn.printSongs(this.allSongs);
 		for(Song s: this.allSongs){
 			this.currentUser.getAllSongs().add(s);
 		}
-	}	
+	}
+	
 	public ArrayList<Song> getAllSongs() {
 		return allSongs;
 	}

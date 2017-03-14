@@ -1,7 +1,9 @@
-package test.java;
+package test.java.localtest;
 
 import static org.junit.Assert.*;
+
 import org.junit.Test;
+
 import application.Player;
 import application.Song;
 import application.User;

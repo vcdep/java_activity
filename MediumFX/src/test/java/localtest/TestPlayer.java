@@ -23,7 +23,7 @@ public class TestPlayer {
 	@Test
 	public void testAddUser(){
 		testPlayer.addUser(testUser);
-		assertEquals("estUser", testPlayer.getAllUsers().get(1).getName());
+		assertEquals("TestUser", testPlayer.getAllUsers().get(1).getName());
 	}
 	@Test
 	public void testGetCurrentUser() {

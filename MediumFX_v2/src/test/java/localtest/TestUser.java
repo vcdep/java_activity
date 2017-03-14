@@ -1,4 +1,4 @@
-package test;
+package test.java.localtest;
 import application.User;
 
 import static org.junit.Assert.*;

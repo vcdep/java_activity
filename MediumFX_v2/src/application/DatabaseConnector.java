@@ -15,7 +15,7 @@ public class DatabaseConnector {
 		this.setQuery("select * from songs");
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			this.conn = DriverManager.getConnection("jdbc:mysql://54.89.215.155:8080/Tester", "naman", "chocolate");
+			this.conn = DriverManager.getConnection("jdbc:mysql://52.201.218.6:8080/Tester", "naman", "chocolate");
 			this.statement = this.conn.createStatement();
 			this.rows = this.statement.executeQuery(this.query);
 			while(this.rows.next()){

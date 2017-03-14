@@ -1,11 +1,9 @@
-package test;
-import application.*;
-
+package test.java.localtest;
 import static org.junit.Assert.*;
 
-import java.io.File;
-
 import org.junit.Test;
+
+import application.Song;
 
 public class TestSong {
 

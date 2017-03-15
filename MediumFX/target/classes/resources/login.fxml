@@ -19,12 +19,12 @@
             <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
             <VBox prefHeight="167.0" prefWidth="200.0">
                <children>
-                  <TextField fx:id="userNameField">
+                  <TextField fx:id="userNameField" promptText="username">
                      <VBox.margin>
                         <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
                      </VBox.margin>
                   </TextField>
-                  <PasswordField fx:id="passwordField">
+                  <PasswordField fx:id="passwordField" promptText="password">
                      <VBox.margin>
                         <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
                      </VBox.margin>

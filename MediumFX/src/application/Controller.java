@@ -6,6 +6,8 @@ import java.util.ResourceBundle;
 
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -22,7 +24,7 @@ public class Controller implements Initializable{
 	private ListView<String> list;
 	@FXML
 	private Button searchButton;
-	
+
 	private ObservableList<String> items;
 	private Player player;
 	private FXMLLoader loader;
@@ -47,7 +49,22 @@ public class Controller implements Initializable{
 	}
 	@FXML
 	public void onSearchButtonClicked(ActionEvent event) throws Exception{
-		this.setList(player.getCurrentUser().getAllSongs());
+//		this.setList(player.getCurrentUser().getAllSongs());
+		System.out.println("Searching...");
+
+	}
+	@FXML
+	public void onIconOneClicked(MouseEvent mevent) throws Exception{
+		this.player.setMedia(this.player.getAllSongs().get(0).getMedia());
+		this.player.mplayer.play();
+		System.out.println("Playing...");
+	}
+	
+	@FXML
+	public void onPlayButtonClicked(MouseEvent mevent) throws Exception{
+		this.player.setMedia(this.player.getAllSongs().get(0).getMedia());
+		this.player.mplayer.play();
+		System.out.println("Playing...");
 	}
 	
 	@Override

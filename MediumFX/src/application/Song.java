@@ -1,6 +1,6 @@
 package application;
 import java.io.File;
-
+import javafx.scene.media.Media;
 public class Song {
 	
 	private String name;
@@ -12,7 +12,9 @@ public class Song {
 	private String icon;
 	private File file;
 	private int timesPlayed;
+	private Media media;
 	
+
 	public Song(){
 		this.name = "Unknown";
 		this.duration = 0;
@@ -36,6 +38,7 @@ public class Song {
 		this.singer = sing;
 		this.cost = cost;
 		this.icon = icon;
+		this.setMedia();
 	}
 	
 	//Getter Methods begin
@@ -107,5 +110,20 @@ public class Song {
 	public void setTimesPlayed(int timesPlayed) {
 		this.timesPlayed = timesPlayed;
 	}
+	
+	public Media getMedia() {
+		return media;
+	}
+
+	public void setMedia() {
+//		this.setFile(this.location);
+		this.setFile("src/resources/Dont_Wanna_Know.mp3");
+		this.media = new Media(this.getFile().toURI().toString());
+	}
+
+	public void setFile(String path) {
+		this.file = new File(path);
+	}
+
 
 }

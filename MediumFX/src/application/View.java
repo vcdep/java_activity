@@ -29,6 +29,7 @@ public class View extends Application{
 		System.out.println("Debugging");
 		scene = new Scene(root, 800, 600);		
 		window.setScene(scene);
+//		window.setOpacity(0.95);
 		window.show();
 	}
 	

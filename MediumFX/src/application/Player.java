@@ -1,5 +1,6 @@
 package application;
 import java.util.ArrayList;
+import javafx.scene.media.*;
 
 public class Player {
 	private User currentUser;
@@ -10,6 +11,7 @@ public class Player {
 	private ArrayList<Song> allSongs;
 	private ArrayList<User> allUsers;
 	private DatabaseConnector dbconn;
+	public MediaPlayer mplayer;
 	
 	public Player(){
 		this.currentUser = new User("Administrator", "root", "root");
@@ -90,5 +92,8 @@ public class Player {
 	}
 	public void setAllUsers(ArrayList<User> allUsers) {
 		this.allUsers = allUsers;
+	}
+	public void setMedia(Media media){
+		this.mplayer = new MediaPlayer(media);
 	}
 }

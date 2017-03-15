@@ -109,7 +109,7 @@
                <children>
                   <VBox alignment="CENTER" prefHeight="61.0" prefWidth="56.0">
                      <children>
-                        <Label text="0:00">
+                        <Label fx:id="currentTimeLabel" text="0:00">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -118,13 +118,13 @@
                   </VBox>
                   <VBox prefHeight="61.0" prefWidth="572.0">
                      <children>
-                        <Slider prefHeight="32.0" prefWidth="579.0" value="30.0" />
+                        <Slider fx:id="hslider" prefHeight="32.0" prefWidth="579.0" value="30.0" />
                         <HBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="29.0" prefWidth="573.0" />
                      </children>
                   </VBox>
                   <VBox alignment="CENTER" prefHeight="61.0" prefWidth="61.0" HBox.hgrow="NEVER">
                      <children>
-                        <Label text="0:00">
+                        <Label fx:id="durationLabel" text="0:00">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -132,11 +132,11 @@
                      </children>
                   </VBox>
                   <Region prefHeight="61.0" prefWidth="29.0" HBox.hgrow="ALWAYS" />
-                  <Slider orientation="VERTICAL" prefHeight="13.0" prefWidth="65.0" />
+                  <Slider fx:id="vslider" orientation="VERTICAL" prefHeight="13.0" prefWidth="65.0" />
                </children></HBox>
             <HBox style="-fx-background-color: grey;">
                <children>
-                  <Label text="Label" textFill="#c5fcb2" HBox.hgrow="ALWAYS">
+                  <Label fx:id="bottomLabel" text="Label" textFill="#c5fcb2" HBox.hgrow="ALWAYS">
                      <HBox.margin>
                         <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                      </HBox.margin>
@@ -184,14 +184,14 @@
             <Region VBox.vgrow="ALWAYS" />
             <HBox style="-fx-background-color: black;">
                <children>
-                  <ImageView fitHeight="97.0" fitWidth="95.0" onMouseClicked="#onPlayButtonClicked" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="playButton" fitHeight="97.0" fitWidth="95.0" onMouseClicked="#onPlayButtonClicked" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@Resources/TS-play-button.png" />
+                        <Image url="@Resources/play.png" />
                      </image>
                   </ImageView>
                   <VBox prefHeight="97.0" prefWidth="521.0" HBox.hgrow="NEVER">
                      <children>
-                        <Label text="Don't Wanna Know (Remix)" textFill="WHITE">
+                        <Label fx:id="nameLabel" text="Don't Wanna Know (Remix)" textFill="WHITE">
                            <font>
                               <Font name="Calibri" size="23.0" />
                            </font>
@@ -199,7 +199,7 @@
                               <Insets />
                            </VBox.margin>
                         </Label>
-                        <Label text=" Maroon 5" textFill="WHITE">
+                        <Label fx:id="albumLabel" text=" Maroon 5" textFill="WHITE">
                            <font>
                               <Font name="Calibri" size="17.0" />
                            </font>
@@ -207,7 +207,7 @@
                               <Insets />
                            </VBox.margin>
                         </Label>
-                        <Label text=" Adam Levine" textFill="WHITE">
+                        <Label fx:id="singerLabel" text=" Adam Levine" textFill="WHITE">
                            <VBox.margin>
                               <Insets />
                            </VBox.margin>

@@ -1,11 +1,13 @@
 package application;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.collections.FXCollections;
@@ -24,10 +26,35 @@ public class Controller implements Initializable{
 	private ListView<String> list;
 	@FXML
 	private Button searchButton;
-
+	@FXML
+	private Slider hslider;
+	@FXML
+	private Slider vslider;
+	@FXML
+	private Label bottomLabel;
+	@FXML
+	private Label currentTimeLabel;
+	@FXML
+	private Label durationLabel;
+	@FXML
+	private Label nameLabel;
+	@FXML
+	private Label albumLabel;
+	@FXML
+	private Label singerLabel;
+	@FXML
+	private ImageView playButton;
+	
+	private Image image;
 	private ObservableList<String> items;
 	private Player player;
 	private FXMLLoader loader;
+	
+	public Controller(){
+		super();
+		
+		System.out.println("Controller created.");
+	}
 	
 	public void setList(ArrayList<Song> songs){
 		items = FXCollections.observableArrayList();
@@ -56,15 +83,24 @@ public class Controller implements Initializable{
 	@FXML
 	public void onIconOneClicked(MouseEvent mevent) throws Exception{
 		this.player.setMedia(this.player.getAllSongs().get(0).getMedia());
-		this.player.mplayer.play();
-		System.out.println("Playing...");
+		System.out.println("Song Selected...");
 	}
 	
 	@FXML
 	public void onPlayButtonClicked(MouseEvent mevent) throws Exception{
-		this.player.setMedia(this.player.getAllSongs().get(0).getMedia());
-		this.player.mplayer.play();
-		System.out.println("Playing...");
+		if(!player.getPlaying()){
+			image = new Image("resources/pause.png");
+			this.playButton.setImage(image);
+			this.player.mplayer.play();;
+			this.player.setPlaying(true);
+			System.out.println("Playing...");
+		} else{
+			this.player.mplayer.pause();;
+			this.image = new Image("resources/play.png");
+			this.playButton.setImage(this.image);
+			this.player.setPlaying(false);
+			System.out.println("Paused");
+		}
 	}
 	
 	@Override

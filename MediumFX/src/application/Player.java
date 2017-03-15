@@ -6,7 +6,6 @@ public class Player {
 	private User currentUser;
 	private Song currentSong;
 	private Boolean playing;
-	private Boolean paused;
 	private Playlist currentPlaylist;
 	private ArrayList<Song> allSongs;
 	private ArrayList<User> allUsers;
@@ -14,6 +13,7 @@ public class Player {
 	public MediaPlayer mplayer;
 	
 	public Player(){
+		this.setPlaying(false); 
 		this.currentUser = new User("Administrator", "root", "root");
 		this.allUsers = new ArrayList<User>();
 		this.allUsers.add(this.currentUser);
@@ -75,12 +75,7 @@ public class Player {
 	public void setPlaying(Boolean playing) {
 		this.playing = playing;
 	}
-	public Boolean getPaused() {
-		return paused;
-	}
-	public void setPaused(Boolean paused) {
-		this.paused = paused;
-	}
+
 	public Playlist getCurrentPlaylist() {
 		return currentPlaylist;
 	}

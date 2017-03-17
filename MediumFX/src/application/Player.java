@@ -11,6 +11,7 @@ public class Player {
 	private ArrayList<User> allUsers;
 	private DatabaseConnector dbconn;
 	public MediaPlayer mplayer;
+	public Media media;
 	
 	public Player(){
 		this.setPlaying(false); 
@@ -36,6 +37,13 @@ public class Player {
 		
 		
 	}
+	
+	public void init(){
+		this.dbconnect();
+		this.currentUser.getAllSongs().get(0).setFile("src/resources/Dont_Wanna_Know.mp3");
+		this.media = new Media(currentUser.getAllSongs().get(0).getFile().toURI().toString());
+	}
+	
 	public void dbconnect(){
 		this.dbconn = new DatabaseConnector();
 		this.setAllSongs(this.dbconn.getDbSongs());
@@ -90,5 +98,6 @@ public class Player {
 	}
 	public void setMedia(Media media){
 		this.mplayer = new MediaPlayer(media);
+
 	}
 }

@@ -82,7 +82,7 @@ public class Controller implements Initializable{
 	}
 	@FXML
 	public void onIconOneClicked(MouseEvent mevent) throws Exception{
-		this.player.setMedia(this.player.getAllSongs().get(0).getMedia());
+		this.player.setMedia(this.player.media);
 		System.out.println("Song Selected...");
 	}
 	

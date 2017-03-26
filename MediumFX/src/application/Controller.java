@@ -10,12 +10,16 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.application.Platform;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class Controller implements Initializable{
 	@FXML
@@ -45,6 +49,10 @@ public class Controller implements Initializable{
 	@FXML
 	private ImageView playButton;
 	
+	private String tempTime;
+	private boolean stopRequested;
+	private boolean atEndOfMedia;
+	private Duration duration;
 	private Image image;
 	private ObservableList<String> items;
 	private Player player;
@@ -63,6 +71,7 @@ public class Controller implements Initializable{
 		this.list.setItems(items);
 	}
 	
+
 	@FXML
 	public void onSwitchUserClicked(ActionEvent event) throws Exception{
 		this.loader = new FXMLLoader();
@@ -84,28 +93,96 @@ public class Controller implements Initializable{
 	public void onIconOneClicked(MouseEvent mevent) throws Exception{
 		this.player.setMedia(this.player.media);
 		System.out.println("Song Selected...");
+		player.mplayer.currentTimeProperty().addListener(new InvalidationListener() 
+	      {
+	          public void invalidated(Observable ov) {
+	              updateValues();
+	          }
+	      });
+		
+		hslider.valueProperty().addListener(new InvalidationListener() {
+		    public void invalidated(Observable ov) {
+			       if (hslider.isValueChanging()) {
+			    	   
+			           player.mplayer.seek(duration.multiply(hslider.getValue() / 100.0));
+			       }
+			    }
+			});
+//
+//      player.mplayer.setOnPlaying(new Runnable() {           
+//
+//			public void run() {
+//				System.out.println("Running");
+//			 if (stopRequested) {
+//				 image = new Image("resources/pause.png");
+//				 playButton.setImage(image);
+//				 player.mplayer.pause();
+//				 stopRequested = false;
+//				 System.out.println("Playing...");
+//              } else {
+//                image = new Image("resources/play.png");
+//      			playButton.setImage(image);
+//      			player.setPlaying(false);
+//      			player.mplayer.play();
+//      			stopRequested = true;
+//      			System.out.println("Paused");
+//              }
+//          }
+//      });
+//
+//      player.mplayer.setOnPaused(new Runnable() {
+//          public void run() {
+//          	image = new Image("resources/play.png");
+//  			playButton.setImage(image);
+//  			player.setPlaying(false);
+//          }
+//      });
+//
+      player.mplayer.setOnReady(new Runnable() {
+          public void run() {
+              duration = player.mplayer.getMedia().getDuration();
+              updateValues();
+          }
+      });
+
+      player.mplayer.setOnEndOfMedia(new Runnable() {
+          public void run() {
+          	image = new Image("resources/play.png");
+  			playButton.setImage(image);
+              stopRequested = true;
+              player.mplayer.seek(player.mplayer.getStartTime());
+              player.mplayer.pause();
+              player.setPlaying(false);
+          }
+     });
 	}
 	
 	@FXML
 	public void onPlayButtonClicked(MouseEvent mevent) throws Exception{
+
 		if(!player.getPlaying()){
 			image = new Image("resources/pause.png");
 			this.playButton.setImage(image);
 			this.player.mplayer.play();;
 			this.player.setPlaying(true);
 			System.out.println("Playing...");
+			stopRequested = false;
 		} else{
+		
 			this.player.mplayer.pause();;
 			this.image = new Image("resources/play.png");
 			this.playButton.setImage(this.image);
 			this.player.setPlaying(false);
 			System.out.println("Paused");
+			stopRequested = true;
 		}
+		
 	}
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
+		
 	}
 	
 	public void setUserLabelText(String userName){
@@ -113,7 +190,45 @@ public class Controller implements Initializable{
 	}
 	public void setPlayer(Player player){
 		this.player = player;
+		stopRequested = false;
+		vslider.valueProperty().addListener(new InvalidationListener() {
+		    public void invalidated(Observable ov) {
+			       if (vslider.isValueChanging()) {
+			           player.mplayer.setVolume(vslider.getValue() / 100.0);
+			       }
+			    }
+			});
+		
 		this.setList(player.getCurrentUser().getAllSongs());
+		
+
 	}
+	
+	protected void updateValues() {
+		  if (currentTimeLabel != null && hslider != null && vslider != null) {
+		     Platform.runLater(new Runnable() {
+		        public void run() {
+		        	Duration currentTime = player.mplayer.getCurrentTime();
+		        	tempTime = String.valueOf(currentTime);
+		        	tempTime = tempTime.substring(0,tempTime.length()-3);
+		        	int time = ((int)Double.parseDouble(tempTime))/1000; 
+		        	tempTime = String.format("%02d", time/60)+":"+String.format("%02d", time%60);
+		        	currentTimeLabel.setText(tempTime);
+
+		        	hslider.setDisable(duration.isUnknown());
+		        	if (!hslider.isDisabled() 
+		        			&& duration.greaterThan(Duration.ZERO) 
+		        			&& !hslider.isValueChanging()) {
+		        				hslider.setValue(currentTime.divide(duration).toMillis()
+		        						* 100.0);
+		        	}
+		        	if (!vslider.isValueChanging()) {
+		        		vslider.setValue((int)Math.round(player.mplayer.getVolume() 
+		        				* 100));
+		        	}
+		        }
+		     });
+		  }
+		}
 	
 }

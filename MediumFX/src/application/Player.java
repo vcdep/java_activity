@@ -42,6 +42,7 @@ public class Player {
 		this.dbconnect();
 		this.currentUser.getAllSongs().get(0).setFile("src/resources/Dont_Wanna_Know.mp3");
 		this.media = new Media(currentUser.getAllSongs().get(0).getFile().toURI().toString());
+		
 	}
 	
 	public void dbconnect(){

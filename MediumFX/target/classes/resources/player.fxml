@@ -107,32 +107,31 @@
          <children>
             <HBox style="-fx-background-color: darkgrey;">
                <children>
-                  <VBox alignment="CENTER" prefHeight="61.0" prefWidth="56.0">
+                  <VBox alignment="CENTER" prefHeight="61.0" prefWidth="76.0">
                      <children>
-                        <Label fx:id="currentTimeLabel" text="0:00">
+                        <Label fx:id="currentTimeLabel" alignment="TOP_CENTER" text="0:00" textFill="WHITE">
                            <font>
-                              <Font size="14.0" />
+                              <Font name="Calibri" size="22.0" />
                            </font>
                         </Label>
                      </children>
                   </VBox>
-                  <VBox prefHeight="61.0" prefWidth="572.0">
+                  <VBox alignment="CENTER" prefHeight="61.0" prefWidth="577.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <Slider fx:id="hslider" prefHeight="32.0" prefWidth="579.0" value="30.0" />
-                        <HBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="29.0" prefWidth="573.0" />
+                        <Slider fx:id="hslider" prefHeight="32.0" />
                      </children>
                   </VBox>
                   <VBox alignment="CENTER" prefHeight="61.0" prefWidth="61.0" HBox.hgrow="NEVER">
                      <children>
-                        <Label fx:id="durationLabel" text="0:00">
+                        <Label fx:id="durationLabel" text="0:00" textFill="WHITE">
                            <font>
-                              <Font size="14.0" />
+                              <Font name="Calibri" size="22.0" />
                            </font>
                         </Label>
                      </children>
                   </VBox>
-                  <Region prefHeight="61.0" prefWidth="29.0" HBox.hgrow="ALWAYS" />
-                  <Slider fx:id="vslider" orientation="VERTICAL" prefHeight="13.0" prefWidth="65.0" />
+                  <Region prefHeight="61.0" prefWidth="36.0" HBox.hgrow="NEVER" />
+                  <Slider fx:id="vslider" orientation="VERTICAL" prefHeight="61.0" prefWidth="46.0" value="100.0" />
                </children></HBox>
             <HBox style="-fx-background-color: grey;">
                <children>

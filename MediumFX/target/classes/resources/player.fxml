@@ -171,11 +171,7 @@
             <Region VBox.vgrow="ALWAYS" />
             <HBox style="-fx-background-color: black;">
                <children>
-                  <ImageView fx:id="playButton" fitHeight="97.0" fitWidth="95.0" onMouseClicked="#onPlayButtonClicked" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@Resources/play.png" />
-                     </image>
-                  </ImageView>
+                  <ImageView fx:id="playButton" fitHeight="97.0" fitWidth="95.0" onMouseClicked="#onPlayButtonClicked" pickOnBounds="true" preserveRatio="true" />
                   <VBox prefHeight="97.0" prefWidth="521.0" HBox.hgrow="NEVER">
                      <children>
                         <Label fx:id="nameLabel" text="Don't Wanna Know (Remix)" textFill="WHITE">

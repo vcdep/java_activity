@@ -215,6 +215,8 @@ public class Controller implements Initializable{
 		icon_0.setImage(image);
 		image = new Image(getClass().getResource("/resources/Sugar.jpg").toString());
 		icon_2.setImage(image);
+		image = new Image(getClass().getResource("/resources/play.png").toString());
+		playButton.setImage(image);
 	}
 	
 	protected void updateValues() {

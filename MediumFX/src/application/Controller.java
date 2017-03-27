@@ -48,6 +48,14 @@ public class Controller implements Initializable{
 	private Label singerLabel;
 	@FXML
 	private ImageView playButton;
+	@FXML
+	private ImageView icon_1;
+	@FXML
+	private ImageView icon_0;
+	@FXML
+	private ImageView icon_2;
+	
+	
 	
 	private String tempTime;
 	private boolean stopRequested;
@@ -201,7 +209,12 @@ public class Controller implements Initializable{
 		
 		this.setList(player.getCurrentUser().getAllSongs());
 		
-
+		image = new Image(getClass().getResource("/resources/Dont_Wanna_Know_Remix.jpg").toString());
+		icon_1.setImage(image);
+		image = new Image(getClass().getResource("/resources/Dont_Wanna_Know.jpg").toString());
+		icon_0.setImage(image);
+		image = new Image(getClass().getResource("/resources/Sugar.jpg").toString());
+		icon_2.setImage(image);
 	}
 	
 	protected void updateValues() {

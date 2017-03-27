@@ -128,7 +128,7 @@ public class Controller implements Initializable{
 //				 stopRequested = false;
 //				 System.out.println("Playing...");
 //              } else {
-//                image = new Image("resources/play.png");
+//                image = new Image(getClass().getResource("/resources/Dont_Wanna_Know_Remix.jpg").toString());
 //      			playButton.setImage(image);
 //      			player.setPlaying(false);
 //      			player.mplayer.play();
@@ -155,7 +155,7 @@ public class Controller implements Initializable{
 
       player.mplayer.setOnEndOfMedia(new Runnable() {
           public void run() {
-          	image = new Image("resources/play.png");
+        	  image = new Image(getClass().getResource("/resources/play.png").toString());
   			playButton.setImage(image);
               stopRequested = true;
               player.mplayer.seek(player.mplayer.getStartTime());
@@ -169,7 +169,7 @@ public class Controller implements Initializable{
 	public void onPlayButtonClicked(MouseEvent mevent) throws Exception{
 
 		if(!player.getPlaying()){
-			image = new Image("resources/pause.png");
+			image = new Image(getClass().getResource("/resources/pause.png").toString());
 			this.playButton.setImage(image);
 			this.player.mplayer.play();;
 			this.player.setPlaying(true);
@@ -178,7 +178,7 @@ public class Controller implements Initializable{
 		} else{
 		
 			this.player.mplayer.pause();;
-			this.image = new Image("resources/play.png");
+			image = new Image(getClass().getResource("/resources/play.png").toString());
 			this.playButton.setImage(this.image);
 			this.player.setPlaying(false);
 			System.out.println("Paused");

@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
+   <top>
+      <VBox style="-fx-background-color: darkgrey;" BorderPane.alignment="CENTER">
+         <children>
+            <MenuBar style="-fx-background-color: darkgrey;">
+              <menus>
+                <Menu mnemonicParsing="false" text="File">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Close" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Edit">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Delete" />
+                        <Menu mnemonicParsing="false" text="Unspecified Menu">
+                          <items>
+                            <MenuItem mnemonicParsing="false" text="Action 1" />
+                          </items>
+                        </Menu>
+                  </items>
+                </Menu>
+                  <Menu mnemonicParsing="false" text="Playlist">
+                    <items>
+                      <MenuItem mnemonicParsing="false" text="Action 1" />
+                    </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Application">
+                    <items>
+                      <MenuItem mnemonicParsing="false" text="Action 1" />
+                    </items>
+                  </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="About" />
+                  </items>
+                </Menu>
+              </menus>
+            </MenuBar>
+            <HBox maxHeight="-Infinity" prefHeight="25.0" prefWidth="100.0" style="-fx-background-color: darkgrey;">
+               <children>
+                  <TextField>
+                     <HBox.margin>
+                        <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                     </HBox.margin>
+                  </TextField>
+                  <Button fx:id="searchButton" mnemonicParsing="false" onAction="#onSearchButtonClicked" text="Search">
+                     <HBox.margin>
+                        <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Region HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                     </HBox.margin>
+                  </Region>
+                  <Label fx:id="userLabel" text="Hi, Bhavyansh" textFill="WHITE">
+                     <HBox.margin>
+                        <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Button fx:id="switchUser" mnemonicParsing="false" onAction="#onSwitchUserClicked" text="Switch User">
+                     <HBox.margin>
+                        <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
+               </VBox.margin>
+            </HBox>
+         </children>
+      </VBox>
+   </top>
+   <right>
+      <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: darkgrey;" BorderPane.alignment="CENTER" />
+   </right>
+   <bottom>
+      <VBox BorderPane.alignment="CENTER">
+         <children>
+            <HBox style="-fx-background-color: darkgrey;">
+               <children>
+                  <VBox alignment="CENTER" prefHeight="61.0" prefWidth="76.0">
+                     <children>
+                        <Label fx:id="currentTimeLabel" alignment="TOP_CENTER" text="0:00" textFill="WHITE">
+                           <font>
+                              <Font name="Calibri" size="22.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="61.0" prefWidth="577.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Slider fx:id="hslider" prefHeight="32.0" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="61.0" prefWidth="61.0" HBox.hgrow="NEVER">
+                     <children>
+                        <Label fx:id="durationLabel" text="0:00" textFill="WHITE">
+                           <font>
+                              <Font name="Calibri" size="22.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <Region prefHeight="61.0" prefWidth="36.0" HBox.hgrow="NEVER" />
+                  <Slider fx:id="vslider" orientation="VERTICAL" prefHeight="61.0" prefWidth="46.0" value="100.0" />
+               </children></HBox>
+            <HBox style="-fx-background-color: grey;">
+               <children>
+                  <Label fx:id="bottomLabel" text="Label" textFill="#c5fcb2" HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </HBox>
+         </children>
+      </VBox>
+   </bottom>
+   <left>
+      <ListView fx:id="list" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: darkgrey;" BorderPane.alignment="CENTER" />
+   </left>
+   <center>
+      <VBox alignment="BOTTOM_CENTER" style="-fx-background-color: grey;" BorderPane.alignment="CENTER">
+         <children>
+            <Region VBox.vgrow="ALWAYS" />
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Region HBox.hgrow="ALWAYS" />
+                  <AnchorPane prefHeight="350.0" prefWidth="500.0" style="-fx-background-color: grey;">
+                     <children>
+                        <ImageView fx:id="icon_1" fitHeight="134.0" fitWidth="188.0" layoutX="196.0" onMouseClicked="#onIconOneClicked" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Resources/Dont_Wanna_Know_Remix.jpg" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="icon_2" fitHeight="71.0" fitWidth="99.0" layoutX="41.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Resources/Dont_Wanna_Know.jpg" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="icon_3" fitHeight="71.0" fitWidth="99.0" layoutX="402.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Resources/Sugar.jpg" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </AnchorPane>
+                  <Region HBox.hgrow="ALWAYS" />
+               </children>
+            </HBox>
+            <Region VBox.vgrow="ALWAYS" />
+            <HBox style="-fx-background-color: black;">
+               <children>
+                  <ImageView fx:id="playButton" fitHeight="97.0" fitWidth="95.0" onMouseClicked="#onPlayButtonClicked" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@Resources/play.png" />
+                     </image>
+                  </ImageView>
+                  <VBox prefHeight="97.0" prefWidth="521.0" HBox.hgrow="NEVER">
+                     <children>
+                        <Label fx:id="nameLabel" text="Don't Wanna Know (Remix)" textFill="WHITE">
+                           <font>
+                              <Font name="Calibri" size="23.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </Label>
+                        <Label fx:id="albumLabel" text=" Maroon 5" textFill="WHITE">
+                           <font>
+                              <Font name="Calibri" size="17.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </Label>
+                        <Label fx:id="singerLabel" text=" Adam Levine" textFill="WHITE">
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </Label>
+                     </children>
+                     <padding>
+                        <Insets left="15.0" top="10.0" />
+                     </padding>
+                  </VBox>
+                  <Region prefHeight="97.0" prefWidth="293.0" HBox.hgrow="ALWAYS" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </center>
+</BorderPane>

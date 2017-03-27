@@ -162,17 +162,17 @@
                      <children>
                         <ImageView fx:id="icon_1" fitHeight="134.0" fitWidth="188.0" layoutX="196.0" onMouseClicked="#onIconOneClicked" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@Resources/Dont_Wanna_Know_Remix.jpg" />
+                              <Image url="@./Dont_Wanna_Know_Remix.jpg" />
                            </image>
                         </ImageView>
                         <ImageView fx:id="icon_2" fitHeight="71.0" fitWidth="99.0" layoutX="41.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@Resources/Dont_Wanna_Know.jpg" />
+                              <Image url="@./Dont_Wanna_Know.jpg" />
                            </image>
                         </ImageView>
                         <ImageView fx:id="icon_3" fitHeight="71.0" fitWidth="99.0" layoutX="402.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@Resources/Sugar.jpg" />
+                              <Image url="@./Sugar.jpg" />
                            </image>
                         </ImageView>
                      </children>

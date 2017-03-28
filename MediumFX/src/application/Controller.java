@@ -1,6 +1,5 @@
 package application;
 
-import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -66,9 +65,30 @@ public class Controller implements Initializable{
 	private Player player;
 	private FXMLLoader loader;
 	
-	public Controller(){
-		super();
-		System.out.println("Controller created.");
+	public void setPlayer(Player newPlayer){
+		System.out.println("Initializing the Player.");
+		this.player = newPlayer;
+		stopRequested = false;
+		vslider.valueProperty().addListener(new InvalidationListener() {
+		    public void invalidated(Observable ov) {
+			       if (vslider.isValueChanging()) {
+			           player.mplayer.setVolume(vslider.getValue() / 100.0);
+			       }
+			    }
+			});
+		
+		this.setList(player.getCurrentUser().getAllSongs());
+		
+		image = new Image(getClass().getResource("/resources/Dont_Wanna_Know_Remix.jpg").toString());
+		icon_1.setImage(image);
+		image = new Image(getClass().getResource("/resources/Dont_Wanna_Know.jpg").toString());
+		icon_0.setImage(image);
+		image = new Image(getClass().getResource("/resources/Sugar.jpg").toString());
+		icon_2.setImage(image);
+		image = new Image(getClass().getResource("/resources/play.png").toString());
+		playButton.setImage(image);
+		
+		setupPlayerMedia();
 	}
 	
 	public void setList(ArrayList<Song> songs){
@@ -76,8 +96,7 @@ public class Controller implements Initializable{
 		for(int i = 0; i<songs.size(); i++)
 			items.add(songs.get(i).getName());
 		this.list.setItems(items);
-	}
-	
+	}	
 
 	@FXML
 	public void onSwitchUserClicked(ActionEvent event) throws Exception{
@@ -100,68 +119,7 @@ public class Controller implements Initializable{
 	public void onIconOneClicked(MouseEvent mevent) throws Exception{
 		this.player.setMedia(this.player.media);
 		System.out.println("Song Selected...");
-		player.mplayer.currentTimeProperty().addListener(new InvalidationListener() 
-	      {
-	          public void invalidated(Observable ov) {
-	              updateValues();
-	          }
-	      });
-		
-		hslider.valueProperty().addListener(new InvalidationListener() {
-		    public void invalidated(Observable ov) {
-			       if (hslider.isValueChanging()) {
-			    	   
-			           player.mplayer.seek(duration.multiply(hslider.getValue() / 100.0));
-			       }
-			    }
-			});
-//
-//      player.mplayer.setOnPlaying(new Runnable() {           
-//
-//			public void run() {
-//				System.out.println("Running");
-//			 if (stopRequested) {
-//				 image = new Image("resources/pause.png");
-//				 playButton.setImage(image);
-//				 player.mplayer.pause();
-//				 stopRequested = false;
-//				 System.out.println("Playing...");
-//              } else {
-//                image = new Image(getClass().getResource("/resources/Dont_Wanna_Know_Remix.jpg").toString());
-//      			playButton.setImage(image);
-//      			player.setPlaying(false);
-//      			player.mplayer.play();
-//      			stopRequested = true;
-//      			System.out.println("Paused");
-//              }
-//          }
-//      });
-//
-//      player.mplayer.setOnPaused(new Runnable() {
-//          public void run() {
-//          	image = new Image("resources/play.png");
-//  			playButton.setImage(image);
-//  			player.setPlaying(false);
-//          }
-//      });
-//
-      player.mplayer.setOnReady(new Runnable() {
-          public void run() {
-              duration = player.mplayer.getMedia().getDuration();
-              updateValues();
-          }
-      });
-
-      player.mplayer.setOnEndOfMedia(new Runnable() {
-          public void run() {
-        	  image = new Image(getClass().getResource("/resources/play.png").toString());
-  			playButton.setImage(image);
-              stopRequested = true;
-              player.mplayer.seek(player.mplayer.getStartTime());
-              player.mplayer.pause();
-              player.setPlaying(false);
-          }
-     });
+		setupPlayerMedia();
 	}
 	
 	@FXML
@@ -195,29 +153,71 @@ public class Controller implements Initializable{
 	public void setUserLabelText(String userName){
 		this.userLabel.setText(userName);
 	}
-	public void setPlayer(Player player){
-		this.player = player;
-		stopRequested = false;
-		vslider.valueProperty().addListener(new InvalidationListener() {
+
+	protected void setupPlayerMedia(){
+		player.mplayer.currentTimeProperty().addListener(new InvalidationListener() 
+	      {
+	          public void invalidated(Observable ov) {
+	              updateValues();
+	          }
+	      });
+		
+		hslider.valueProperty().addListener(new InvalidationListener() {
 		    public void invalidated(Observable ov) {
-			       if (vslider.isValueChanging()) {
-			           player.mplayer.setVolume(vslider.getValue() / 100.0);
+			       if (hslider.isValueChanging()) {
+			    	   
+			           player.mplayer.seek(duration.multiply(hslider.getValue() / 100.0));
 			       }
 			    }
 			});
-		
-		this.setList(player.getCurrentUser().getAllSongs());
-		
-		image = new Image(getClass().getResource("/resources/Dont_Wanna_Know_Remix.jpg").toString());
-		icon_1.setImage(image);
-		image = new Image(getClass().getResource("/resources/Dont_Wanna_Know.jpg").toString());
-		icon_0.setImage(image);
-		image = new Image(getClass().getResource("/resources/Sugar.jpg").toString());
-		icon_2.setImage(image);
-		image = new Image(getClass().getResource("/resources/play.png").toString());
-		playButton.setImage(image);
-	}
+
+//	    player.mplayer.setOnPlaying(new Runnable() {           
+//	
+//				public void run() {
+//					System.out.println("Running");
+//				 if (stopRequested) {
+//					 image = new Image("resources/pause.png");
+//					 playButton.setImage(image);
+//					 player.mplayer.pause();
+//					 stopRequested = false;
+//					 System.out.println("Playing...");
+//	            } else {
+//	              image = new Image(getClass().getResource("/resources/Dont_Wanna_Know_Remix.jpg").toString());
+//	    			playButton.setImage(image);
+//	    			player.setPlaying(false);
+//	    			player.mplayer.play();
+//	    			stopRequested = true;
+//	    			System.out.println("Paused");
+//	            }
+//	        }
+//	    });
+//	
+//	    player.mplayer.setOnPaused(new Runnable() {
+//	        public void run() {
+//	        	image = new Image("resources/play.png");
+//				playButton.setImage(image);
+//				player.setPlaying(false);
+//	        }
+//	    });
+//	
+	    player.mplayer.setOnReady(new Runnable() {
+	        public void run() {
+	            duration = player.mplayer.getMedia().getDuration();
+	            updateValues();
+	        }
+	    });
 	
+	    player.mplayer.setOnEndOfMedia(new Runnable() {
+	        public void run() {
+	      	  image = new Image(getClass().getResource("/resources/play.png").toString());
+				playButton.setImage(image);
+	            stopRequested = true;
+	            player.mplayer.seek(player.mplayer.getStartTime());
+	            player.mplayer.pause();
+	            player.setPlaying(false);
+	        }
+	   });
+	}
 	protected void updateValues() {
 		  if (currentTimeLabel != null && hslider != null && vslider != null) {
 		     Platform.runLater(new Runnable() {

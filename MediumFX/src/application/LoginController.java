@@ -1,6 +1,5 @@
 package application;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
@@ -28,67 +27,62 @@ public class LoginController implements Initializable{
 	
 	public LoginController(){
 		super();
-		player = new Player();
 		System.out.println("Login Controller created.");
 	}
 	
 	@FXML
 	public void onLoginClicked(ActionEvent event) throws Exception{
-		try{
-			player.init();
-			Boolean correct = false;
-			for(User user: player.getAllUsers()){
-				System.out.println("UserName: " + user.getUserName() + " Password: " + user.getPassword());
-				if(user.getUserName().equals(this.userNameField.getText())
-						&& user.getPassword().equals(this.passwordField.getText())){
-					correct = true;
-					break;
-				}
+		System.out.println("Logging into the server.");
+		this.errorMessage.setText("Connecting to the server... ");
+		player = new Player();
+		player.init();
+		Boolean correct = false;
+
+		for(User user: player.getAllUsers()){
+			System.out.println("UserName: " + user.getUserName() + " Password: " + user.getPassword());
+			if(user.getUserName().equals(this.userNameField.getText())
+					&& user.getPassword().equals(this.passwordField.getText())){
+				correct = true;
+				break;
 			}
-			if(correct){
-				loader = new FXMLLoader();
-				root = loader.load(getClass().getResource("/resources/player.fxml").openStream());
-				window = (Stage) ((Control)event.getSource()).getScene().getWindow();
-				scene = new Scene(root, 800, 600);
-				controller = (Controller) loader.getController();
-				controller.setUserLabelText("Hi, " + this.userNameField.getText());
-				controller.setPlayer(this.player);
-		//		controller.setList(player.getCurrentUser().getAllSongs());
-				window.setScene(scene);
-				window.show();
-			}else{
-				this.errorMessage.setText("Sorry, please try again.");
-			}
-		}catch(Exception e){
-			errorMessage.setText("Sorry, could not connect to the server.");
 		}
-		
+		if(correct){
+			loader = new FXMLLoader();
+			root = loader.load(getClass().getResource("/resources/player.fxml").openStream());
+			window = (Stage) ((Control)event.getSource()).getScene().getWindow();
+			scene = new Scene(root, 800, 600);
+			controller = (Controller) loader.getController();
+			controller.setUserLabelText("Hi, " + this.userNameField.getText());
+			controller.setPlayer(this.player);
+	//		controller.setList(player.getCurrentUser().getAllSongs());
+			window.setScene(scene);
+			window.show();
+		}else{
+			this.errorMessage.setText("Sorry, please try again.");
+		}
 		
 	}
 	@FXML
 	public void onSignupClicked(ActionEvent event) throws Exception{
-		try{
-			player.init();
-			String userName = this.userNameField.getText();
-			String passWord = this.passwordField.getText();
-			if(userName.length()<6 || passWord.length()<6){
-				this.errorMessage.setText("Username or Password needs to be 6 characters or longer.");
-			}else{
-				this.player.addUser(new User(userName, userName, passWord));
-				for(User user : this.player.getAllUsers())
-					System.out.println("User: " + user.getName());
-				loader = new FXMLLoader();
-				root = loader.load(getClass().getResource("/resources/player.fxml").openStream());
-				window = (Stage) ((Control)event.getSource()).getScene().getWindow();
-				scene = new Scene(root, 800, 600);
-				controller = (Controller) loader.getController();
-				controller.setUserLabelText("Hi, " + this.userNameField.getText());
-				controller.setPlayer(this.player);
-				window.setScene(scene);
-				window.show();
-			}
-		}catch(Exception e){
-			errorMessage.setText("Sorry, could not connect to the server.");
+		player = new Player();
+		player.init();
+		String userName = this.userNameField.getText();
+		String passWord = this.passwordField.getText();
+		if(userName.length()<6 || passWord.length()<6){
+			this.errorMessage.setText("Username or Password needs to be 6 characters or longer.");
+		}else{
+			this.player.addUser(new User(userName, userName, passWord));
+			for(User user : this.player.getAllUsers())
+				System.out.println("User: " + user.getName());
+			loader = new FXMLLoader();
+			root = loader.load(getClass().getResource("/resources/player.fxml").openStream());
+			window = (Stage) ((Control)event.getSource()).getScene().getWindow();
+			scene = new Scene(root, 800, 600);
+			controller = (Controller) loader.getController();
+			controller.setUserLabelText("Hi, " + this.userNameField.getText());
+			controller.setPlayer(this.player);
+			window.setScene(scene);
+			window.show();
 		}
 	}
 

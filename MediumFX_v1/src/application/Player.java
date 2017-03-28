@@ -1,4 +1,5 @@
 package application;
+import java.io.InputStream;
 import java.util.ArrayList;
 import javafx.scene.media.*;
 
@@ -41,7 +42,8 @@ public class Player {
 	public void init(){
 		this.dbconnect();
 		this.currentUser.getAllSongs().get(0).setFile("src/resources/Dont_Wanna_Know.mp3");
-		this.media = new Media(currentUser.getAllSongs().get(0).getFile().toURI().toString());
+		String in = getClass().getResource("/resources/Dont_Wanna_Know.mp3").toString();
+		this.media = new Media(in);
 		
 	}
 	

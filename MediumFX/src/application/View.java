@@ -3,9 +3,6 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.*;
 import javafx.stage.*;
-import javafx.scene.layout.*;
-import javafx.scene.control.*;
-import javafx.scene.image.*;
 
 public class View extends Application{
 	private Stage window;

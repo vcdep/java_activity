@@ -68,6 +68,7 @@ public class Controller implements Initializable{
 	
 	public Controller(){
 		super();
+		
 		System.out.println("Controller created.");
 	}
 	

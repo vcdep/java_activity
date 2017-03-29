@@ -152,17 +152,17 @@
       <ListView fx:id="list" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: darkgrey;" BorderPane.alignment="CENTER" />
    </left>
    <center>
-      <VBox alignment="BOTTOM_CENTER" style="-fx-background-color: grey;" BorderPane.alignment="CENTER">
+      <VBox alignment="BOTTOM_CENTER" onScroll="#onScrolled" style="-fx-background-color: grey;" BorderPane.alignment="CENTER">
          <children>
             <Region VBox.vgrow="ALWAYS" />
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
                   <Region HBox.hgrow="ALWAYS" />
-                  <AnchorPane prefHeight="350.0" prefWidth="500.0" style="-fx-background-color: grey;">
+                  <AnchorPane onScroll="#onScrolled" prefHeight="350.0" prefWidth="500.0" style="-fx-background-color: grey;">
                      <children>
-                        <ImageView fx:id="icon_1" fitHeight="134.0" fitWidth="188.0" layoutX="196.0" onMouseClicked="#onIconOneClicked" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="icon_1" fitHeight="134.0" fitWidth="188.0" layoutX="190.0" onMouseClicked="#onIconOneClicked" onScroll="#onScrolled" pickOnBounds="true" preserveRatio="true" />
                         <ImageView fx:id="icon_0" fitHeight="71.0" fitWidth="99.0" layoutX="41.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true" />
-                        <ImageView fx:id="icon_2" fitHeight="71.0" fitWidth="99.0" layoutX="402.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="icon_2" fitHeight="71.0" fitWidth="99.0" layoutX="402.0" layoutY="31.0" onScroll="#onScrolled" pickOnBounds="true" preserveRatio="true" />
                      </children>
                   </AnchorPane>
                   <Region HBox.hgrow="ALWAYS" />

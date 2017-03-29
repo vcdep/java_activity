@@ -41,7 +41,7 @@ public class Player {
 	public void init(){
 		this.dbconnect();
 //		this.currentUser.getAllSongs().get(0).setFile("src/resources/Dont_Wanna_Know.mp3");
-		String in = getClass().getResource("/resources/Dont_Wanna_Know.mp3").toString();
+		String in = getClass().getResource("/resources/Honey, I'm Good.mp3").toString();
 		this.media = new Media(in);
 		this.mplayer = new MediaPlayer(this.media);
 		

@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -20,6 +21,7 @@ import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
@@ -59,9 +61,9 @@ public class Controller implements Initializable{
 	@FXML
 	private ImageView icon_2;
 	@FXML
-	private TranslateTransition move;
+	private TranslateTransition move0, move1, move2;
 	@FXML
-	private ScaleTransition resize;
+	private ScaleTransition resize0, resize1, resize2;
 	@FXML
 	private ParallelTransition parallel;
 	
@@ -99,6 +101,8 @@ public class Controller implements Initializable{
 		playButton.setImage(image);
 		
 		setupPlayerMedia();
+
+
 	}
 	
 	public void setList(ArrayList<Song> songs){
@@ -110,7 +114,22 @@ public class Controller implements Initializable{
 
 	@FXML
 	public void onHover(MouseEvent mevent) throws Exception{
-		
+		resize0 = new ScaleTransition();
+		resize0.setDuration(Duration.seconds(0.1));
+		resize0.setNode((Node)mevent.getSource());
+		resize0.setToX(1.1);
+		resize0.setToY(1.1);
+		resize0.play();
+	}
+	
+	@FXML
+	public void onHoverOut(MouseEvent mevent) throws Exception{
+		resize0 = new ScaleTransition();
+		resize0.setDuration(Duration.seconds(0.1));
+		resize0.setNode((Node)mevent.getSource());
+		resize0.setToX(1.0);
+		resize0.setToY(1.0);
+		resize0.play();
 	}
 	
 	@FXML
@@ -122,18 +141,18 @@ public class Controller implements Initializable{
 		}else{
 			delY = -1;
 		}
-		move = new TranslateTransition();
-		resize = new ScaleTransition();
-		parallel = new ParallelTransition(move,resize);
-		move.setDuration(Duration.seconds(0.25));
-		move.setNode(this.icon_1);
-		move.setToX(delY*160);
-		move.setToY(5);
-		resize.setDuration(Duration.seconds(0.25));
-		resize.setNode(this.icon_1);
-		resize.setToX(0.6);
-		resize.setToY(0.6);
-		move.setInterpolator(Interpolator.EASE_IN);
+		move0 = new TranslateTransition();
+		resize0 = new ScaleTransition();
+		parallel = new ParallelTransition(move0,resize0);
+		move0.setDuration(Duration.seconds(0.25));
+		move0.setNode(this.icon_1);
+		move0.setToX(delY*160);
+		move0.setToY(5);
+		resize0.setDuration(Duration.seconds(0.25));
+		resize0.setNode(this.icon_1);
+		resize0.setToX(0.6);
+		resize0.setToY(0.6);
+		move0.setInterpolator(Interpolator.EASE_IN);
 		parallel.play();
 	}
 	
@@ -284,4 +303,7 @@ public class Controller implements Initializable{
 		  }
 		}
 	
+	public void bigToSmall(int dir, Node node){
+		
+	}
 }

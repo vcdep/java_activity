@@ -3,9 +3,6 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.*;
 import javafx.stage.*;
-import javafx.scene.layout.*;
-import javafx.scene.control.*;
-import javafx.scene.image.*;
 
 public class View extends Application{
 	private Stage window;
@@ -19,8 +16,7 @@ public class View extends Application{
 	}
 	
 	public void start(Stage primaryStage) throws Exception{
-		player = new Player();
-		player.init();
+
 		window = primaryStage;
 		loader = new FXMLLoader();
 		root = loader.load(getClass().getResource("/resources/login.fxml").openStream());

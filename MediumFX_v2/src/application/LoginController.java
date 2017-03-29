@@ -1,6 +1,5 @@
 package application;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
@@ -26,9 +25,19 @@ public class LoginController implements Initializable{
 	private FXMLLoader loader;
 	private Pane root;
 	
+	public LoginController(){
+		super();
+		System.out.println("Login Controller created.");
+	}
+	
 	@FXML
 	public void onLoginClicked(ActionEvent event) throws Exception{
+		System.out.println("Logging into the server.");
+		this.errorMessage.setText("Connecting to the server... ");
+		player = new Player();
+		player.init();
 		Boolean correct = false;
+
 		for(User user: player.getAllUsers()){
 			System.out.println("UserName: " + user.getUserName() + " Password: " + user.getPassword());
 			if(user.getUserName().equals(this.userNameField.getText())
@@ -45,15 +54,18 @@ public class LoginController implements Initializable{
 			controller = (Controller) loader.getController();
 			controller.setUserLabelText("Hi, " + this.userNameField.getText());
 			controller.setPlayer(this.player);
-//			controller.setList(player.getCurrentUser().getAllSongs());
+	//		controller.setList(player.getCurrentUser().getAllSongs());
 			window.setScene(scene);
 			window.show();
 		}else{
 			this.errorMessage.setText("Sorry, please try again.");
 		}
+		
 	}
 	@FXML
 	public void onSignupClicked(ActionEvent event) throws Exception{
+		player = new Player();
+		player.init();
 		String userName = this.userNameField.getText();
 		String passWord = this.passwordField.getText();
 		if(userName.length()<6 || passWord.length()<6){

@@ -9,6 +9,11 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
+import javafx.animation.Interpolator;
+import javafx.animation.ParallelTransition;
+import javafx.animation.ScaleTransition;
+import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
@@ -53,7 +58,12 @@ public class Controller implements Initializable{
 	private ImageView icon_0;
 	@FXML
 	private ImageView icon_2;
-	
+	@FXML
+	private TranslateTransition move;
+	@FXML
+	private ScaleTransition resize;
+	@FXML
+	private ParallelTransition parallel;
 	
 	
 	private String tempTime;
@@ -98,6 +108,35 @@ public class Controller implements Initializable{
 		this.list.setItems(items);
 	}	
 
+	@FXML
+	public void onHover(MouseEvent mevent) throws Exception{
+		
+	}
+	
+	@FXML
+	public void onScrolled(ScrollEvent e) throws Exception{
+		System.out.println(e.getDeltaY());
+		int delY;
+		if(e.getDeltaY()>0){
+			delY = 1;
+		}else{
+			delY = -1;
+		}
+		move = new TranslateTransition();
+		resize = new ScaleTransition();
+		parallel = new ParallelTransition(move,resize);
+		move.setDuration(Duration.seconds(0.25));
+		move.setNode(this.icon_1);
+		move.setToX(delY*160);
+		move.setToY(5);
+		resize.setDuration(Duration.seconds(0.25));
+		resize.setNode(this.icon_1);
+		resize.setToX(0.6);
+		resize.setToY(0.6);
+		move.setInterpolator(Interpolator.EASE_IN);
+		parallel.play();
+	}
+	
 	@FXML
 	public void onSwitchUserClicked(ActionEvent event) throws Exception{
 		this.loader = new FXMLLoader();

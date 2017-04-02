@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -17,7 +23,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
    <top>
       <VBox style="-fx-background-color: darkgrey;" BorderPane.alignment="CENTER">
          <children>
@@ -57,7 +63,7 @@
             </MenuBar>
             <HBox maxHeight="-Infinity" prefHeight="25.0" prefWidth="100.0" style="-fx-background-color: darkgrey;">
                <children>
-                  <TextField>
+                  <TextField fx:id="searchBar">
                      <HBox.margin>
                         <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
                      </HBox.margin>
@@ -82,6 +88,7 @@
                         <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
                      </HBox.margin>
                   </Button>
+                  <TextField layoutX="14.0" layoutY="14.0" />
                </children>
                <VBox.margin>
                   <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
@@ -140,29 +147,29 @@
       </VBox>
    </bottom>
    <left>
-      <ListView fx:id="list" onScroll="#onScrolled" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: darkgrey;" BorderPane.alignment="CENTER" />
+      <ListView fx:id="list" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: darkgrey;" BorderPane.alignment="CENTER" />
    </left>
    <center>
-      <VBox alignment="BOTTOM_CENTER" onScroll="#onScrolled" style="-fx-background-color: grey;" BorderPane.alignment="CENTER">
+      <VBox fx:id="theBox" alignment="BOTTOM_CENTER" onScroll="#onScrolled" style="-fx-background-color: grey;" BorderPane.alignment="CENTER">
          <children>
-            <Region onScroll="#onScrolled" VBox.vgrow="ALWAYS" />
+            <Region VBox.vgrow="ALWAYS" />
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
                   <Region HBox.hgrow="ALWAYS" />
-                  <AnchorPane onScroll="#onScrolled" prefHeight="350.0" prefWidth="500.0" style="-fx-background-color: grey;">
+                  <AnchorPane prefHeight="350.0" prefWidth="500.0" style="-fx-background-color: grey;">
                      <children>
-                        <ImageView fx:id="icon_1" fitHeight="134.0" fitWidth="188.0" layoutX="190.0" onMouseClicked="#onIconOneClicked" onMouseEntered="#onHover" onMouseExited="#onHoverOut" onScroll="#onScrolled" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="icon_1" fitHeight="134.0" fitWidth="188.0" layoutX="190.0" onMouseClicked="#onIconOneClicked" onMouseEntered="#onHover" onMouseExited="#onHoverOut" pickOnBounds="true" preserveRatio="true" />
                         <ImageView fx:id="icon_0" fitHeight="71.0" fitWidth="99.0" layoutX="41.0" layoutY="31.0" onMouseEntered="#onHover" onMouseExited="#onHoverOut" pickOnBounds="true" preserveRatio="true" />
-                        <ImageView fx:id="icon_2" fitHeight="71.0" fitWidth="99.0" layoutX="402.0" layoutY="31.0" onMouseEntered="#onHover" onMouseExited="#onHoverOut" onScroll="#onScrolled" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="icon_2" fitHeight="71.0" fitWidth="99.0" layoutX="402.0" layoutY="31.0" onMouseEntered="#onHover" onMouseExited="#onHoverOut" pickOnBounds="true" preserveRatio="true" />
                      </children>
                   </AnchorPane>
                   <Region HBox.hgrow="ALWAYS" />
                </children>
             </HBox>
-            <Region onScroll="#onScrolled" VBox.vgrow="ALWAYS" />
+            <Region VBox.vgrow="ALWAYS" />
             <HBox style="-fx-background-color: black;">
                <children>
-                  <ImageView fx:id="playButton" fitHeight="97.0" fitWidth="95.0" onMouseClicked="#onPlayButtonClicked" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="playButton" fitHeight="97.0" fitWidth="95.0" onMouseClicked="#onPlayButtonClicked" onMouseEntered="#onHover" onMouseExited="#onHoverOut" pickOnBounds="true" preserveRatio="true" />
                   <VBox prefHeight="97.0" prefWidth="521.0" HBox.hgrow="NEVER">
                      <children>
                         <Label fx:id="nameLabel" text="Don't Wanna Know (Remix)" textFill="WHITE">

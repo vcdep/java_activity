@@ -4,15 +4,18 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
+import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
 import javafx.animation.ParallelTransition;
 import javafx.animation.ScaleTransition;
+import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
@@ -20,6 +23,7 @@ import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
@@ -59,12 +63,17 @@ public class Controller implements Initializable{
 	@FXML
 	private ImageView icon_2;
 	@FXML
-	private TranslateTransition move;
+	private TranslateTransition move[];
 	@FXML
-	private ScaleTransition resize;
+	private ScaleTransition resize[];
 	@FXML
 	private ParallelTransition parallel;
-	
+	@FXML
+	private ScaleTransition goBack, comeFront;
+	@FXML 
+	private SequentialTransition serial;
+	@FXML
+	private ImageView icon_img[];
 	
 	private String tempTime;
 	private boolean stopRequested;
@@ -74,6 +83,8 @@ public class Controller implements Initializable{
 	private ObservableList<String> items;
 	private Player player;
 	private FXMLLoader loader;
+	private Icon icon[];
+	private int i;
 	
 	public void setPlayer(Player newPlayer){
 		System.out.println("Initializing the Player.");
@@ -98,7 +109,23 @@ public class Controller implements Initializable{
 		image = new Image(getClass().getResource("/resources/play.png").toString());
 		playButton.setImage(image);
 		
+		
+		icon_img = new ImageView[3];
+		icon_img[0] = icon_0;
+		icon_img[1] = icon_1;
+		icon_img[2] = icon_2;
+		
+		icon = new Icon[3];
+		for(int i = 0; i<3; i++){
+			icon[i] = new Icon(i,i);
+		}
+		
 		setupPlayerMedia();
+
+		setupTransitions();
+		
+		
+		i = 0;
 	}
 	
 	public void setList(ArrayList<Song> songs){
@@ -110,30 +137,80 @@ public class Controller implements Initializable{
 
 	@FXML
 	public void onHover(MouseEvent mevent) throws Exception{
-		
+		resize[0] = new ScaleTransition();
+		resize[0].setDuration(Duration.seconds(0.1));
+		resize[0].setNode((Node)mevent.getSource());
+		resize[0].setToX(1.1);
+		resize[0].setToY(1.1);
+		resize[0].play();
+	}
+	
+	@FXML
+	public void onHoverOut(MouseEvent mevent) throws Exception{
+		resize[0] = new ScaleTransition();
+		resize[0].setDuration(Duration.seconds(0.1));
+		resize[0].setNode((Node)mevent.getSource());
+		resize[0].setToX(1.0);
+		resize[0].setToY(1.0);
+		resize[0].play();
 	}
 	
 	@FXML
 	public void onScrolled(ScrollEvent e) throws Exception{
-		System.out.println(e.getDeltaY());
-		int delY;
+		
+		int delY;		
 		if(e.getDeltaY()>0){
 			delY = 1;
 		}else{
 			delY = -1;
 		}
-		move = new TranslateTransition();
-		resize = new ScaleTransition();
-		parallel = new ParallelTransition(move,resize);
-		move.setDuration(Duration.seconds(0.25));
-		move.setNode(this.icon_1);
-		move.setToX(delY*160);
-		move.setToY(5);
-		resize.setDuration(Duration.seconds(0.25));
-		resize.setNode(this.icon_1);
-		resize.setToX(0.6);
-		resize.setToY(0.6);
-		move.setInterpolator(Interpolator.EASE_IN);
+//		for(int i = 0; i<3; i++){
+//			if(icon[i].getState() == 0){
+//				if(delY>0){
+//					smallToBig(delY, icon_img[i]);
+//					icon[i].setState(1);
+//					bigToSmall(delY, icon_img[(i+1)%3]);
+//					icon[(i+1)%3].setState(2);
+//					backToBack((-1)*delY, icon_img[(i+2)%3]);
+//					icon[(i+2)%3].setState(0);
+//				}else if(delY<0){
+//					backToBack((-1)*delY, icon_img[i]);
+//					icon[i].setState(2);
+//					bigToSmall(delY, icon_img[(i+1)%3]);
+//					icon[(i+1)%3].setState(0);
+//					smallToBig(delY, icon_img[(i+2)%3]);
+//					icon[(i+2)%3].setState(1);
+//				}
+//				break;
+//			}
+//		}
+		
+		if(i%2==0){
+			if(i==0){
+//				setupTransitions();
+				smallToBig(delY, icon_img[0]);
+					System.out.println(icon_img[0].getLayoutX() + " : ScaleX");
+			}
+			else if(i==2){
+//				setupTransitions();
+				bigToSmall(delY, icon_img[0]);
+				System.out.println(icon_img[0].getLayoutX() + " : ScaleX");
+
+
+			}
+			else if(i==4){
+//				setupTransitions();
+				backToBack((-1)*delY, icon_img[0]);
+				System.out.println(icon_img[0].getLayoutX() + " : ScaleX");
+				i=-2;
+			}
+			System.out.println("i = " + i);
+		}i++;
+
+		
+
+
+//		serial.play();
 		parallel.play();
 	}
 	
@@ -193,6 +270,23 @@ public class Controller implements Initializable{
 		this.userLabel.setText(userName);
 	}
 
+	protected void setupTransitions(){
+		move = new TranslateTransition[3];
+		for(int i = 0; i<3; i++){
+			move[i] = new TranslateTransition();
+		}
+		resize = new ScaleTransition[3];
+		for(int i = 0; i<3; i++){
+			resize[i] = new ScaleTransition();
+		}
+				
+		goBack = new ScaleTransition();
+		comeFront = new ScaleTransition();
+		
+		serial = new SequentialTransition(goBack, move[2], comeFront);
+		parallel = new ParallelTransition(move[0],resize[0], move[1], resize[1],serial);
+	}
+	
 	protected void setupPlayerMedia(){
 		player.mplayer.currentTimeProperty().addListener(new InvalidationListener() 
 	      {
@@ -283,5 +377,46 @@ public class Controller implements Initializable{
 		     });
 		  }
 		}
+	
+	public void bigToSmall(int dir, ImageView img){
+		setupTransitions();
+		move[0].setDuration(Duration.seconds(0.25));
+		move[0].setNode(img);
+		move[0].setToX(dir*175);
+		move[0].setToY(5);
+		resize[0].setDuration(Duration.seconds(0.25));
+		resize[0].setNode(img);
+		resize[0].setToX(0.6);
+		resize[0].setToY(0.6);
+		move[0].setInterpolator(Interpolator.EASE_IN);
+	}
+	
+	public void smallToBig(int dir, ImageView img){
+		setupTransitions();
+		move[1].setDuration(Duration.seconds(0.25));
+		move[1].setNode(img);
+		move[1].setToX(dir*175);
+		resize[1].setDuration(Duration.seconds(0.25));
+		resize[1].setNode(img);
+		resize[1].setToX(2);
+		resize[1].setToY(2);
+		move[1].setInterpolator(Interpolator.EASE_IN);
+	}
+	
+	public void backToBack(int dir, ImageView img){
+		setupTransitions();
+		goBack.setDuration(Duration.seconds(0.125));
+		goBack.setNode(img);
+		goBack.setToX(0);
+		goBack.setToY(0);
+		move[2].setNode(img);
+		move[2].setDuration(Duration.seconds(0.0001));
+		move[2].setToX(360*dir);
+		comeFront.setDuration(Duration.seconds(0.125));
+		comeFront.setNode(img);
+		comeFront.setToX(1);
+		comeFront.setToY(1);
+	}
+	
 	
 }

@@ -9,6 +9,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.animation.FadeTransition;
@@ -74,6 +76,15 @@ public class Controller implements Initializable{
 	private SequentialTransition serial;
 	@FXML
 	private ImageView icon_img[];
+	@FXML
+	private VBox theBox;
+	@FXML
+	private TextField searchBar;
+	@FXML
+	EventHandler<?super ScrollEvent> handle;
+	@FXML
+	EventHandler<?super KeyEvent> arrow;
+	
 	
 	private String tempTime;
 	private boolean stopRequested;
@@ -85,6 +96,7 @@ public class Controller implements Initializable{
 	private FXMLLoader loader;
 	private Icon icon[];
 	private int i;
+	private Thread t1;
 	
 	public void setPlayer(Player newPlayer){
 		System.out.println("Initializing the Player.");
@@ -99,6 +111,23 @@ public class Controller implements Initializable{
 			});
 		
 		this.setList(player.getCurrentUser().getAllSongs());
+		
+		this.searchBar.setOnKeyPressed(event->{
+			try{
+				if(event.getCode()==KeyCode.RIGHT){
+					System.out.println("Right");
+					i=(i+1)%3;
+					move(-1,i);
+					parallel.play();
+				}
+				if(event.getCode()==KeyCode.LEFT){
+					System.out.println("Left");
+					i=(i+2)%3;
+					move(1,i);
+					parallel.play();
+				}
+			}catch(Exception e){}
+		});
 		
 		image = new Image(getClass().getResource("/resources/Dont_Wanna_Know_Remix.jpg").toString());
 		icon_1.setImage(image);
@@ -124,8 +153,10 @@ public class Controller implements Initializable{
 
 		setupTransitions();
 		
+		handle = theBox.getOnScroll();
+		arrow = searchBar.getOnKeyPressed();
 		
-		i = 0;
+		i = -1;
 	}
 	
 	public void setList(ArrayList<Song> songs){
@@ -135,13 +166,15 @@ public class Controller implements Initializable{
 		this.list.setItems(items);
 	}	
 
+
 	@FXML
 	public void onHover(MouseEvent mevent) throws Exception{
 		resize[0] = new ScaleTransition();
 		resize[0].setDuration(Duration.seconds(0.1));
-		resize[0].setNode((Node)mevent.getSource());
-		resize[0].setToX(1.1);
-		resize[0].setToY(1.1);
+		Node node = (Node)mevent.getSource();
+		resize[0].setNode(node);
+		resize[0].setToX(node.getScaleX()*1.1);
+		resize[0].setToY(node.getScaleY()*1.1);
 		resize[0].play();
 	}
 	
@@ -149,9 +182,10 @@ public class Controller implements Initializable{
 	public void onHoverOut(MouseEvent mevent) throws Exception{
 		resize[0] = new ScaleTransition();
 		resize[0].setDuration(Duration.seconds(0.1));
-		resize[0].setNode((Node)mevent.getSource());
-		resize[0].setToX(1.0);
-		resize[0].setToY(1.0);
+		Node node = (Node)mevent.getSource();
+		resize[0].setNode(node);
+		resize[0].setToX(node.getScaleX()/1.1);
+		resize[0].setToY(node.getScaleY()/1.1);
 		resize[0].play();
 	}
 	
@@ -160,58 +194,65 @@ public class Controller implements Initializable{
 		
 		int delY;		
 		if(e.getDeltaY()>0){
+			i=(i+1)%3;
 			delY = 1;
 		}else{
 			delY = -1;
 		}
-//		for(int i = 0; i<3; i++){
-//			if(icon[i].getState() == 0){
-//				if(delY>0){
-//					smallToBig(delY, icon_img[i]);
-//					icon[i].setState(1);
-//					bigToSmall(delY, icon_img[(i+1)%3]);
-//					icon[(i+1)%3].setState(2);
-//					backToBack((-1)*delY, icon_img[(i+2)%3]);
-//					icon[(i+2)%3].setState(0);
-//				}else if(delY<0){
-//					backToBack((-1)*delY, icon_img[i]);
-//					icon[i].setState(2);
-//					bigToSmall(delY, icon_img[(i+1)%3]);
-//					icon[(i+1)%3].setState(0);
-//					smallToBig(delY, icon_img[(i+2)%3]);
-//					icon[(i+2)%3].setState(1);
-//				}
-//				break;
-//			}
-//		}
+		System.out.println("dir: " + delY);
 		
-		if(i%2==0){
-			if(i==0){
-//				setupTransitions();
-				smallToBig(delY, icon_img[0]);
-					System.out.println(icon_img[0].getLayoutX() + " : ScaleX");
-			}
-			else if(i==2){
-//				setupTransitions();
-				bigToSmall(delY, icon_img[0]);
-				System.out.println(icon_img[0].getLayoutX() + " : ScaleX");
-
-
-			}
-			else if(i==4){
-//				setupTransitions();
-				backToBack((-1)*delY, icon_img[0]);
-				System.out.println(icon_img[0].getLayoutX() + " : ScaleX");
-				i=-2;
-			}
-			System.out.println("i = " + i);
-		}i++;
-
+		System.out.println(icon[0] + " | " + icon[1] + " | " + icon[2]);
 		
+		i=(i+1)%3;
 
+		move(delY, i);
 
-//		serial.play();
+		System.out.println("Done");
+//		theBox.setOnScroll(handle);
+	}
+	
+	public void setThread(){
+		t1 = new Thread(new Runnable() {
+			public void run() {
+				try {
+					System.out.println("Started");
+					Thread.sleep(250);
+					theBox.setOnScroll(handle);
+					searchBar.setOnKeyPressed(arrow);
+				} catch (InterruptedException e) {}
+			}
+		});
+	}
+	
+	public void move(int delY, int i){
+		setupTransitions();
+		System.out.println("move: ("+delY+","+i+")");
+		if(delY>0){
+			if(icon[i].getState()==0){
+//				setupTransitions();
+				smallToBig(delY, icon_img[i]);
+				bigToSmall(delY, icon_img[(i+1)%3]);
+				backToBack(delY, icon_img[(i+2)%3]);
+				icon[i].setState(1);
+				icon[(i+1)%3].setState(2);
+				icon[(i+2)%3].setState(0);
+			}
+		}else{
+			if(icon[i].getState()==0){
+//				setupTransitions();
+				backToBack(delY, icon_img[i]);
+				bigToSmall(delY, icon_img[(i+1)%3]);
+				smallToBig(delY, icon_img[(i+2)%3]);
+				icon[i].setState(2);
+				icon[(i+1)%3].setState(0);
+				icon[(i+2)%3].setState(1);
+			}
+		}
+		theBox.setOnScroll(null);
+		searchBar.setOnKeyPressed(null);
 		parallel.play();
+		setThread();
+		t1.start();
 	}
 	
 	@FXML
@@ -379,44 +420,43 @@ public class Controller implements Initializable{
 		}
 	
 	public void bigToSmall(int dir, ImageView img){
-		setupTransitions();
 		move[0].setDuration(Duration.seconds(0.25));
 		move[0].setNode(img);
-		move[0].setToX(dir*175);
+		move[0].setToX(img.getTranslateX()+dir*175);
 		move[0].setToY(5);
 		resize[0].setDuration(Duration.seconds(0.25));
 		resize[0].setNode(img);
-		resize[0].setToX(0.6);
-		resize[0].setToY(0.6);
-		move[0].setInterpolator(Interpolator.EASE_IN);
+		resize[0].setToX(img.getScaleX()*0.5);
+		resize[0].setToY(img.getScaleY()*0.5);
+		move[0].setInterpolator(Interpolator.EASE_OUT);
 	}
 	
 	public void smallToBig(int dir, ImageView img){
-		setupTransitions();
 		move[1].setDuration(Duration.seconds(0.25));
 		move[1].setNode(img);
-		move[1].setToX(dir*175);
+		move[1].setToX(img.getTranslateX()+dir*175);
 		resize[1].setDuration(Duration.seconds(0.25));
 		resize[1].setNode(img);
-		resize[1].setToX(2);
-		resize[1].setToY(2);
-		move[1].setInterpolator(Interpolator.EASE_IN);
+		resize[1].setToX(img.getScaleX()*2);
+		resize[1].setToY(img.getScaleY()*2);
+		move[1].setInterpolator(Interpolator.EASE_OUT);
 	}
 	
 	public void backToBack(int dir, ImageView img){
-		setupTransitions();
 		goBack.setDuration(Duration.seconds(0.125));
 		goBack.setNode(img);
 		goBack.setToX(0);
 		goBack.setToY(0);
 		move[2].setNode(img);
 		move[2].setDuration(Duration.seconds(0.0001));
-		move[2].setToX(360*dir);
+		move[2].setToX(img.getTranslateX()-350*dir);
 		comeFront.setDuration(Duration.seconds(0.125));
 		comeFront.setNode(img);
-		comeFront.setToX(1);
-		comeFront.setToY(1);
+		comeFront.setToX(img.getScaleX()*1);
+		comeFront.setToY(img.getScaleY()*1);
 	}
+
+
 	
 	
 }

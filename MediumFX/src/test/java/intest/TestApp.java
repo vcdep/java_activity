@@ -17,7 +17,7 @@ public class TestApp {
 	
 	@Test
 	public void testDatabaseConnection() {
-		assertEquals(2, testPlayer.getAllSongs().size());
+		assertEquals(3, testPlayer.getAllSongs().size());
 	}
 
 	

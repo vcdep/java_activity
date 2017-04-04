@@ -3,11 +3,14 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -30,10 +33,8 @@ public class LoginController implements Initializable{
 		System.out.println("Login Controller created.");
 	}
 	
-	@FXML
-	public void onLoginClicked(ActionEvent event) throws Exception{
+	public void login(Control control)throws Exception{
 		System.out.println("Logging into the server.");
-		this.errorMessage.setText("Connecting to the server... ");
 		player = new Player();
 		player.init();
 		Boolean correct = false;
@@ -49,7 +50,7 @@ public class LoginController implements Initializable{
 		if(correct){
 			loader = new FXMLLoader();
 			root = loader.load(getClass().getResource("/resources/player.fxml").openStream());
-			window = (Stage) ((Control)event.getSource()).getScene().getWindow();
+			window = (Stage) control.getScene().getWindow();
 			scene = new Scene(root, 800, 600);
 			controller = (Controller) loader.getController();
 			controller.setUserLabelText("Hi, " + this.userNameField.getText());
@@ -60,7 +61,11 @@ public class LoginController implements Initializable{
 		}else{
 			this.errorMessage.setText("Sorry, please try again.");
 		}
-		
+	}
+	
+	@FXML
+	public void onLoginClicked(ActionEvent event) throws Exception{
+		login((Control)event.getSource());		
 	}
 	@FXML
 	public void onSignupClicked(ActionEvent event) throws Exception{
@@ -88,6 +93,13 @@ public class LoginController implements Initializable{
 
 	public void setPlayer(Player player){
 		this.player = player;
+		this.passwordField.setOnKeyPressed(event->{
+			try{
+				if(event.getCode()==KeyCode.ENTER){
+					login((Control)event.getSource());
+				}
+			}catch(Exception e){}
+		});
 	}
 	
 	@Override

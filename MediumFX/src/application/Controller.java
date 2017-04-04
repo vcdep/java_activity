@@ -22,12 +22,15 @@ import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.*;
 import javafx.scene.layout.*;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -86,7 +89,7 @@ public class Controller implements Initializable{
 	EventHandler<?super KeyEvent> arrow;
 	
 	
-	private String tempTime;
+	private String tempTime; 
 	private boolean stopRequested;
 	private boolean atEndOfMedia;
 	private Duration duration;
@@ -97,6 +100,7 @@ public class Controller implements Initializable{
 	private Icon icon[];
 	private int i;
 	private Thread t1;
+	private int count;
 	
 	public void setPlayer(Player newPlayer){
 		System.out.println("Initializing the Player.");
@@ -126,14 +130,18 @@ public class Controller implements Initializable{
 					move(1,i);
 					parallel.play();
 				}
+				if(event.getCode()==KeyCode.ENTER){
+					play();
+				}
+				
 			}catch(Exception e){}
 		});
 		
 		image = new Image(getClass().getResource("/resources/Dont_Wanna_Know_Remix.jpg").toString());
 		icon_1.setImage(image);
-		image = new Image(getClass().getResource("/resources/Dont_Wanna_Know.jpg").toString());
-		icon_0.setImage(image);
 		image = new Image(getClass().getResource("/resources/Sugar.jpg").toString());
+		icon_0.setImage(image);
+		image = new Image(getClass().getResource("/resources/Honey.jpg").toString());
 		icon_2.setImage(image);
 		image = new Image(getClass().getResource("/resources/play.png").toString());
 		playButton.setImage(image);
@@ -151,11 +159,17 @@ public class Controller implements Initializable{
 		
 		setupPlayerMedia();
 
+	    this.nameLabel.setText(player.getAllSongs().get(0).getName());
+	    this.albumLabel.setText(player.getAllSongs().get(0).getAlbum());
+	    this.singerLabel.setText(player.getAllSongs().get(0).getSinger());
+		String in = getClass().getResource(player.getAllSongs().get(0).getLocation()).toString();
+		player.media = new Media(in);
+		player.mplayer = new MediaPlayer(player.media);
 		setupTransitions();
 		
 		handle = theBox.getOnScroll();
 		arrow = searchBar.getOnKeyPressed();
-		
+		count = 0;
 		i = -1;
 	}
 	
@@ -201,7 +215,7 @@ public class Controller implements Initializable{
 		}
 		System.out.println("dir: " + delY);
 		
-		System.out.println(icon[0] + " | " + icon[1] + " | " + icon[2]);
+		System.out.println(icon[0] + " | " + icon[1] + " | " + icon[2] + " count = " + this.count);
 		
 		i=(i+1)%3;
 
@@ -226,9 +240,9 @@ public class Controller implements Initializable{
 	
 	public void move(int delY, int i){
 		setupTransitions();
-		System.out.println("move: ("+delY+","+i+")");
 		if(delY>0){
 			if(icon[i].getState()==0){
+				count = (count + 1)%player.getAllSongs().size();
 //				setupTransitions();
 				smallToBig(delY, icon_img[i]);
 				bigToSmall(delY, icon_img[(i+1)%3]);
@@ -239,6 +253,7 @@ public class Controller implements Initializable{
 			}
 		}else{
 			if(icon[i].getState()==0){
+				count = (count + player.getAllSongs().size() -1)%player.getAllSongs().size();
 //				setupTransitions();
 				backToBack(delY, icon_img[i]);
 				bigToSmall(delY, icon_img[(i+1)%3]);
@@ -253,6 +268,18 @@ public class Controller implements Initializable{
 		parallel.play();
 		setThread();
 		t1.start();
+		Song song = player.getAllSongs().get(count);
+		this.nameLabel.setText(song.getName());
+		this.albumLabel.setText(song.getAlbum());
+		this.singerLabel.setText(song.getSinger());
+		String in = getClass().getResource(song.getLocation()).toString();
+		player.mplayer.stop();
+		image = new Image(getClass().getResource("/resources/play.png").toString());
+		this.playButton.setImage(this.image);
+		this.player.setPlaying(false);
+		
+		player.media = new Media(in);
+		player.mplayer = new MediaPlayer(player.media);
 	}
 	
 	@FXML
@@ -275,29 +302,14 @@ public class Controller implements Initializable{
 	@FXML
 	public void onIconOneClicked(MouseEvent mevent) throws Exception{
 		this.player.setMedia(this.player.media);
-		System.out.println("Song Selected...");
+		System.out.println("x= " + mevent.getX());
 		setupPlayerMedia();
 	}
-	
+
 	@FXML
 	public void onPlayButtonClicked(MouseEvent mevent) throws Exception{
 
-		if(!player.getPlaying()){
-			image = new Image(getClass().getResource("/resources/pause.png").toString());
-			this.playButton.setImage(image);
-			this.player.mplayer.play();;
-			this.player.setPlaying(true);
-			System.out.println("Playing...");
-			stopRequested = false;
-		} else{
-		
-			this.player.mplayer.pause();;
-			image = new Image(getClass().getResource("/resources/play.png").toString());
-			this.playButton.setImage(this.image);
-			this.player.setPlaying(false);
-			System.out.println("Paused");
-			stopRequested = true;
-		}
+		play();
 		
 	}
 	
@@ -391,6 +403,9 @@ public class Controller implements Initializable{
 	            player.setPlaying(false);
 	        }
 	   });
+	    
+
+
 	}
 	protected void updateValues() {
 		  if (currentTimeLabel != null && hslider != null && vslider != null) {
@@ -456,6 +471,24 @@ public class Controller implements Initializable{
 		comeFront.setToY(img.getScaleY()*1);
 	}
 
+	public void play(){
+		if(!player.getPlaying()){
+			image = new Image(getClass().getResource("/resources/pause.png").toString());
+			this.playButton.setImage(image);
+			this.player.mplayer.play();;
+			this.player.setPlaying(true);
+			System.out.println("Playing...");
+			stopRequested = false;
+		} else{
+		
+			this.player.mplayer.pause();;
+			image = new Image(getClass().getResource("/resources/play.png").toString());
+			this.playButton.setImage(this.image);
+			this.player.setPlaying(false);
+			System.out.println("Paused");
+			stopRequested = true;
+		}
+	}
 
 	
 	

@@ -22,4 +22,8 @@ public class Icon {
 		this.state = state;
 	}
 	
+	public String toString(){
+		return "ID= " + this.getID() + ",State= " + this.getState();
+	}
+	
 }

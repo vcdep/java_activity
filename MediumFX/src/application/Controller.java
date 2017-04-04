@@ -157,17 +157,16 @@ public class Controller implements Initializable{
 			icon[i] = new Icon(i,i);
 		}
 		
+
 	    this.nameLabel.setText(player.getAllSongs().get(0).getName());
 	    this.albumLabel.setText(player.getAllSongs().get(0).getAlbum());
 	    this.singerLabel.setText(player.getAllSongs().get(0).getSinger());
 		String in = getClass().getResource(player.getAllSongs().get(0).getLocation()).toString();
 		player.media = new Media(in);
 		player.mplayer = new MediaPlayer(player.media);
-
+		setupTransitions();
 		setupPlayerMedia();
 
-		setupTransitions();
-		
 		handle = theBox.getOnScroll();
 		arrow = searchBar.getOnKeyPressed();
 		count = 0;
@@ -278,7 +277,6 @@ public class Controller implements Initializable{
 		image = new Image(getClass().getResource("/resources/play.png").toString());
 		this.playButton.setImage(this.image);
 		this.player.setPlaying(false);
-		
 		player.media = new Media(in);
 		player.mplayer = new MediaPlayer(player.media);
 		setupPlayerMedia();

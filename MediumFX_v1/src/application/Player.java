@@ -1,5 +1,4 @@
 package application;
-import java.io.InputStream;
 import java.util.ArrayList;
 import javafx.scene.media.*;
 
@@ -10,7 +9,7 @@ public class Player {
 	private Playlist currentPlaylist;
 	private ArrayList<Song> allSongs;
 	private ArrayList<User> allUsers;
-	private DatabaseConnector dbconn;
+	public DatabaseConnector dbconn;
 	public MediaPlayer mplayer;
 	public Media media;
 	
@@ -41,9 +40,10 @@ public class Player {
 	
 	public void init(){
 		this.dbconnect();
-		this.currentUser.getAllSongs().get(0).setFile("src/resources/Dont_Wanna_Know.mp3");
-		String in = getClass().getResource("/resources/Dont_Wanna_Know.mp3").toString();
+//		this.currentUser.getAllSongs().get(0).setFile("src/resources/Dont_Wanna_Know.mp3");
+		String in = getClass().getResource(this.allSongs.get(0).getLocation()).toString();
 		this.media = new Media(in);
+		this.mplayer = new MediaPlayer(this.media);
 		
 	}
 	
@@ -100,7 +100,7 @@ public class Player {
 		this.allUsers = allUsers;
 	}
 	public void setMedia(Media media){
+		this.media = media;
 		this.mplayer = new MediaPlayer(media);
-
 	}
 }

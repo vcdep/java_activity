@@ -9,13 +9,14 @@ public class DatabaseConnector {
 	private String query;
 	private ArrayList<Song> dbSongs;
 	private ArrayList<User> dbUsers;
+	private boolean connected;
 	
 	public DatabaseConnector(){
 		dbSongs = new ArrayList<Song>();
 		this.setQuery("select * from songs");
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			this.conn = DriverManager.getConnection("jdbc:mysql://54.172.246.30:8080/Tester", "naman", "chocolate");
+			this.conn = DriverManager.getConnection("jdbc:mysql://34.207.194.74:8080/Tester", "naman", "chocolate");
 			this.statement = this.conn.createStatement();
 			this.rows = this.statement.executeQuery(this.query);
 			while(this.rows.next()){
@@ -32,13 +33,16 @@ public class DatabaseConnector {
 //									this.rows.getString("Singer")+"\t"+
 //									this.rows.getDouble("Cost")+"\t"+
 //									this.rows.getString("Location")+"\t"+
-//									this.rows.getString("Icon")+"\t");				
+//									this.rows.getString("Icon")+"\t");	
+				connected = true;
 			}
 		} catch (SQLException ex) {
 			System.out.println("SQLException: " + ex.getMessage());
-			System.out.println("SQLException: " + ex.getErrorCode());			
+			System.out.println("SQLException: " + ex.getErrorCode());
+			connected = false;
 		} catch(ClassNotFoundException e){
 			e.printStackTrace();
+			connected = false;
 		}				
 	}
 	
@@ -94,4 +98,11 @@ public class DatabaseConnector {
 		this.dbUsers = dbUsers;
 	}	
 	
+	public boolean isConnected() {
+		return connected;
+	}
+
+	public void setConnected(boolean connected) {
+		this.connected = connected;
+	}
 }

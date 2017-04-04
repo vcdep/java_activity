@@ -157,14 +157,15 @@ public class Controller implements Initializable{
 			icon[i] = new Icon(i,i);
 		}
 		
-		setupPlayerMedia();
-
 	    this.nameLabel.setText(player.getAllSongs().get(0).getName());
 	    this.albumLabel.setText(player.getAllSongs().get(0).getAlbum());
 	    this.singerLabel.setText(player.getAllSongs().get(0).getSinger());
 		String in = getClass().getResource(player.getAllSongs().get(0).getLocation()).toString();
 		player.media = new Media(in);
 		player.mplayer = new MediaPlayer(player.media);
+
+		setupPlayerMedia();
+
 		setupTransitions();
 		
 		handle = theBox.getOnScroll();
@@ -280,6 +281,8 @@ public class Controller implements Initializable{
 		
 		player.media = new Media(in);
 		player.mplayer = new MediaPlayer(player.media);
+		setupPlayerMedia();
+
 	}
 	
 	@FXML

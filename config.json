@@ -1,6 +1,7 @@
 {
   "language": "java",
   "stages": [
-    "static"
+    "static",
+    "unit"
   ]
 }

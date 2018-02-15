@@ -1,4 +1,4 @@
-package test.java.intest;
+package test.java.integration;
 
 import static org.junit.Assert.*;
 

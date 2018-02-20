@@ -2,6 +2,7 @@
   "language": "java",
   "stages": [
     "static",
-    "unit"
+    "unit",
+    "integration"
   ]
 }

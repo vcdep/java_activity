@@ -4,6 +4,7 @@
     "static",
     "unit",
     "integration",
-    "build"
+    "build",
+    "staging"
   ]
 }

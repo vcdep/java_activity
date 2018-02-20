@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="test.java.unit.TestSong" time="0" tests="16" errors="0" skipped="0" failures="0">
+<testsuite name="test.java.unit.TestSong" time="0.001" tests="16" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/java-8-oracle/jre/lib/amd64"/>
@@ -62,7 +62,7 @@
   <testcase name="testGetTimesPlayed" classname="test.java.unit.TestSong" time="0"/>
   <testcase name="testSetLocation" classname="test.java.unit.TestSong" time="0"/>
   <testcase name="testGetLocation" classname="test.java.unit.TestSong" time="0"/>
-  <testcase name="testSetDuration" classname="test.java.unit.TestSong" time="0"/>
+  <testcase name="testSetDuration" classname="test.java.unit.TestSong" time="0.001"/>
   <testcase name="testGetDuration" classname="test.java.unit.TestSong" time="0"/>
   <testcase name="testGetCost" classname="test.java.unit.TestSong" time="0"/>
   <testcase name="testGetIcon" classname="test.java.unit.TestSong" time="0"/>

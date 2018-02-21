@@ -1,1 +1,2 @@
-target/*.xml
+target/surefire-reports
+target/maven-archive

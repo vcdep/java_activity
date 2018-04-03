@@ -15,7 +15,7 @@
     </resources>
     <plugins>
       <plugin>
-        <groupId>org.apache.maven.plugs</groupdId>
+        <groupId>org.apache.maven.plugins</groupdId>
         <artifactId>maven-jar-plugin</artifactId>
         <configuration>
           <archive>

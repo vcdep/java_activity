@@ -20,7 +20,7 @@
           <archive>
             <manifest>
               <addClasspath>true</addClasspath>
-              <mainClass>application.View</mainClass>
+              <mainClass>main.application.View</mainClass>
             </manifest>
           </archive>
         </configuration>

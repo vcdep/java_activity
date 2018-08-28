@@ -10,4 +10,8 @@ Integration Testing. This style of project is very useful as a teaching tool
 since changes are very visual since students are able to see the change on
 their own computer.
 
+For signing in to the application use the following:
+Username: root
+Password: root
+
 Author: Bhavyansh Mishra (BhavyanshM)
